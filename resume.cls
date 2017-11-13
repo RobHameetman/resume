@@ -1,4 +1,3 @@
-%% Start of file `resume.cls'.
 % Resume Class File
 %
 % Author:
@@ -16,10 +15,27 @@
 %-------------------------------------------------------------------------------
 %                Identification
 %-------------------------------------------------------------------------------
-\NeedsTeXFormat{LaTeX2e}[195/12/01]
-\ProvidesClass{resume}[2017/11/13 v1.0.0 Resume Class - Robert Hameetman]
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesClass{resume}[2017/11/13 Robert Hameetman Standard Resume class]
 
 
 %-------------------------------------------------------------------------------
 %                Class options
 %-------------------------------------------------------------------------------
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
+\ProcessOptions\relax
+\LoadClass[letterpaper]{article}
+
+
+%-------------------------------------------------------------------------------
+%                Packages
+%-------------------------------------------------------------------------------
+
+
+%-------------------------------------------------------------------------------
+%                Commands
+%-------------------------------------------------------------------------------
+\renewcommand{\normalsize}{\fontsize{9pt}{11pt}\selectfont}
+\setlength{\textwidth}{8.5in}
+\setlength{\textheight}{11in}
+\pagenumbering{alph}
