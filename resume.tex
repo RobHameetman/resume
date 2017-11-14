@@ -8,11 +8,40 @@
 % Robert Hameetman <rob@rham.io>
 % http://rham.io
 %
-% Class license:
-% LPPL v1.3c (http://www.latex-project.org/lppl)
+% Template license:
+% CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
 %
-\documentclass[9pt letterpaper]{resume}
+\documentclass{resume}
+\fontdir[fonts/]
 
+
+%-------------------------------------------------------------------------------
+%	Info
+%-------------------------------------------------------------------------------
+\name{Robert}{Hameetman}
+\jobtitle{Software Engineer}
+
+\mobile{(847) 331-0391}
+\email{rob@rham.io}
+\homepage{rham.io}
+\github{rhameetman}
+\linkedin{rhameetman}
+% \stackoverflow{SO-id}{SO-name}
+
+
+%-------------------------------------------------------------------------------
+%	Render Document
+%-------------------------------------------------------------------------------
 \begin{document}
-	Hello, World!
+
+
+\renderheader
+
+%\input{resume/summary.tex}
+%\input{resume/experience.tex}
+%\input{resume/sideprojects.tex}
+%\input{resume/opensource.tex}
+%\input{resume/education.tex}
+
+
 \end{document}

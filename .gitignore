@@ -218,3 +218,35 @@ TSWLatexianTemp*
 
 # expex forward references with \gathertags
 *-tags.tex
+
+#fonts, Arial
+fonts/arial/*.afm
+fonts/arial/*.amfm
+fonts/arial/*.eot
+fonts/arial/*.dfont
+fonts/arial/*.fon
+fonts/arial/*.fot
+fonts/arial/*.odttf
+fonts/arial/*.otf
+fonts/arial/*.ttc
+fonts/arial/*.tte
+fonts/arial/*.ttf
+fonts/arial/*.woff
+fonts/arial/*.woff2
+fonts/arial/*.ytf
+
+#fonts, OCR-B
+fonts/ocrb/*.afm
+fonts/ocrb/*.amfm
+fonts/ocrb/*.eot
+fonts/ocrb/*.dfont
+fonts/ocrb/*.fon
+fonts/ocrb/*.fot
+fonts/ocrb/*.odttf
+fonts/ocrb/*.otf
+fonts/ocrb/*.ttc
+fonts/ocrb/*.tte
+fonts/ocrb/*.ttf
+fonts/ocrb/*.woff
+fonts/ocrb/*.woff2
+fonts/ocrb/*.ytf
