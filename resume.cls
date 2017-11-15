@@ -82,6 +82,7 @@
 \definecolor{blue}{HTML}{0000FF}
 
 \colorlet{text}{grey}
+\colorlet{hyperlink}{blue}
 
 
 %-------------------------------------------------------------------------------
@@ -129,13 +130,16 @@
 \newcommand*{\stackoverflow}[1]{\def\@stackoverflow{#1}}
 
 
+%-------------------------------------------------------------------------------
+%                Luacode
+%-------------------------------------------------------------------------------
 \begin{luacode}
 	function phonetic ( surname )
 		if type(surname) == "string" then
 			local regex = "(\%a\%a)(\%a\%a\%a\%a)(\%a\%a\%a)"
 			local one, two, three = string.match( string.lower( surname ), regex)
 
-			local result = "(" .. one .. " · " .. "\\textbf{" .. two .. "} · " .. three .. ")"
+			local result = "("..one.." · ".."\\textbf{"..two.."} · "..three..")"
 		
 			tex.print( result )
 		end
@@ -157,17 +161,17 @@
 }}
 
 \newcommand*{\headermobilestyle}[1]{{\fontsize{11pt}{1em}\arial\color{blue}
-	\href{tel:###1}\\
+	\href{tel:{#1}}{#1}\\
 }}
 
 \newcommand*{\headeremailstyle}[2]{{\fontsize{11pt}{1em}\arial\color{blue}
-	\href{mailto:###1}\\
-	\href{http://###2}\\
+	\href{mailto:{#1}}{#1}\\
+	\href{http://{#2}}{http://{#2}}\\
 }}
 
 \newcommand*{\headersocialstyle}[2]{{\fontsize{11pt}{1em}\arial\color{blue}
-	\href{https://github.com/###1}\\
-	\href{https://linkedin.com/in/###2}\\
+	\href{https://github.com/#1}{https://github.com/#1}\\
+	\href{https://linkedin.com/in/#2}{https://linkedin.com/in/#2}\\
 }}
 
 
@@ -215,21 +219,25 @@
 %	\seq{\verb=(=\seq · \textbf{\seq} · \seq)}
 %}}
 
+%\newcommand*{\src}[2]{%
+%	\directlua{ src("\luatexluaescapestring{\unexpanded{#1}}","\luatexluaescapestring{\unexpanded{#2}}")}
+%}
+
 \newcommand*{\renderheader}{%
 	\begin{header}
 		\begin{headertitle}
 			\headertitlestyle{\@firstname}{\@lastname}
 			\headerphoneticstyle{\@lastname}
 		\end{headertitle}
-%		\begin{headermobilelink}
-%			\headermobilestyle{\@mobile}
-%		\end{headermobilelink}
-%		\begin{headeremaillinks}
-%			\headeremailstyle
-%		\end{headeremaillinks}
-%		\begin{headersociallinks}
-%			\headersocialstyle
-%		\end{headersociallinks}
+		\begin{headermobilelink}
+			\headermobilestyle{\@mobile}
+		\end{headermobilelink}
+		\begin{headeremaillinks}
+			\headeremailstyle{\@email}{\@homepage}
+		\end{headeremaillinks}
+		\begin{headersociallinks}
+			\headersocialstyle{\@github}{\@linkedin}
+		\end{headersociallinks}
 	\end{header}
 }
 	
