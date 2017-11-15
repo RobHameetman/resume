@@ -5,7 +5,8 @@
 % http://rham.io
 %
 % Notes:
-%    This class file defines the structure and layout of the resume tex file (resume.tex).
+%    This class file acts as a master page by defining the structure and 
+%    layout of the resume tex file (resume.tex).
 %
 % Class license:
 % LPPL v1.3c (http://www.latex-project.org/lppl)
@@ -40,10 +41,13 @@
 %-------------------------------------------------------------------------------
 \RequirePackage{fontspec}
 \RequirePackage{geometry}
-\RequirePackage[unicode]{hyperref}
+\RequirePackage[hidelinks,unicode]{hyperref}
+\RequirePackage{l3regex}
+\RequirePackage{luacode}
 \RequirePackage{ragged2e}
 \RequirePackage{setspace}
 \RequirePackage{xcolor}
+\RequirePackage{xstring}
 
 
 %-------------------------------------------------------------------------------
@@ -106,9 +110,6 @@
 % Name
 \newcommand*{\name}[2]{\def\@firstname{#1}\def\@lastname{#2}}
 
-% Title
-\newcommand*{\jobtitle}[1]{\def\@jobtitle{#1}}
-
 % Mobile
 \newcommand*{\mobile}[1]{\def\@mobile{#1}}
 
@@ -128,12 +129,45 @@
 \newcommand*{\stackoverflow}[1]{\def\@stackoverflow{#1}}
 
 
+\begin{luacode}
+	function phonetic ( surname )
+		if type(surname) == "string" then
+			local regex = "(\%a\%a)(\%a\%a\%a\%a)(\%a\%a\%a)"
+			local one, two, three = string.match( string.lower( surname ), regex)
+
+			local result = "(" .. one .. " · " .. "\\textbf{" .. two .. "} · " .. three .. ")"
+		
+			tex.print( result )
+		end
+	end
+\end{luacode}
+
+
 %-------------------------------------------------------------------------------
 %                Styles
 %-------------------------------------------------------------------------------
 \newcommand*{\headertitlestyle}[2]{{\fontsize{18pt}{1em}\ocrb\color{blue}
 	#1\\%	\@firstname
-	#2%		\@lastname
+	#2\\%	\@lastname
+}}
+
+\newcommand*{\headerphoneticstyle}[1]{{\fontsize{11pt}{1em}\arial\color{black}
+	\directlua{ tex.write( phonetic( \luastring{#1} ))}\\
+	% TODO: make 'meet' bold
+}}
+
+\newcommand*{\headermobilestyle}[1]{{\fontsize{11pt}{1em}\arial\color{blue}
+	\href{tel:###1}\\
+}}
+
+\newcommand*{\headeremailstyle}[2]{{\fontsize{11pt}{1em}\arial\color{blue}
+	\href{mailto:###1}\\
+	\href{http://###2}\\
+}}
+
+\newcommand*{\headersocialstyle}[2]{{\fontsize{11pt}{1em}\arial\color{blue}
+	\href{https://github.com/###1}\\
+	\href{https://linkedin.com/in/###2}\\
 }}
 
 
@@ -142,19 +176,60 @@
 %-------------------------------------------------------------------------------
 \newenvironment{header}{
 	\begin{flushleft}
-		\begin{spacing}{1.4}
 }{
-		\end{spacing}
 	\end{flushleft}
 }
+
+\newenvironment{headertitle}{
+	\begin{spacing}{1.4}
+}{
+	\end{spacing}
+}
+
+\newenvironment{headermobilelink}{
+	\begin{spacing}{1.4}
+}{
+	\end{spacing}
+}
+
+
+\newenvironment{headeremaillinks}{
+	\begin{spacing}{1.4}
+}{
+	\end{spacing}
+}
+
+
+\newenvironment{headersociallinks}{
+	\begin{spacing}{1.4}
+}{
+	\end{spacing}
+}
+
 
 
 %-------------------------------------------------------------------------------
 %                Render
 %-------------------------------------------------------------------------------
-\newcommand*{\renderheader}{
+%\newcommand*{\phonetic}[1]{{\regex_extract_all:nnNTF{\A(\w+)(\w\w\w\w)(\w+)\Z}{#1}
+%	\seq{\verb=(=\seq · \textbf{\seq} · \seq)}
+%}}
+
+\newcommand*{\renderheader}{%
 	\begin{header}
-		\headertitlestyle{\@firstname}{\@lastname}
+		\begin{headertitle}
+			\headertitlestyle{\@firstname}{\@lastname}
+			\headerphoneticstyle{\@lastname}
+		\end{headertitle}
+%		\begin{headermobilelink}
+%			\headermobilestyle{\@mobile}
+%		\end{headermobilelink}
+%		\begin{headeremaillinks}
+%			\headeremailstyle
+%		\end{headeremaillinks}
+%		\begin{headersociallinks}
+%			\headersocialstyle
+%		\end{headersociallinks}
 	\end{header}
 }
 	
